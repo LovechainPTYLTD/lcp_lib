@@ -1,29 +1,26 @@
 {
-  "_from": "git+https://github.com/byteball/ocore.git",
-  "_id": "ocore@0.2.95",
+  "_from": "git+https://github.com/LovechainPTYLTD/lcp_lib.git",
   "_inBundle": false,
   "_integrity": "",
-  "_location": "/ocore",
+  "_location": "/lcp_lib",
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "ocore@git+https://github.com/byteball/ocore.git",
-    "name": "ocore",
-    "escapedName": "ocore",
-    "rawSpec": "git+https://github.com/byteball/ocore.git",
-    "saveSpec": "git+https://github.com/byteball/ocore.git",
-    "fetchSpec": "https://github.com/byteball/ocore.git",
+    "raw": "lcp_lib@git+https://github.com/LovechainPTYLTD/lcp_lib.git",
+    "name": "lcp_lib",
+    "escapedName": "lcplib",
+    "rawSpec": "git+https://github.com/LovechainPTYLTD/lcp_lib.git",
+    "saveSpec": "git+https://github.com/LovechainPTYLTD/lcp_lib.git",
+    "fetchSpec": "https://github.com/LovechainPTYLTD/lcp_lib.git",
     "gitCommittish": null
   },
   "_requiredBy": [
     "/"
   ],
   "_resolved": "git+https://github.com/byteball/ocore.git#5054588dc3b55826b033a79ae0b92c2f9f77c60b",
-  "_spec": "ocore@git+https://github.com/byteball/ocore.git",
+  "_spec": "lcp_lib@git+https://github.com/LovechainPTYLTD/lcp_lib.git",
   "_where": "/home/ubuntu/investorNode",
-  "author": {
-    "name": "Obyte"
-  },
+  "author": "LCP",
   "browser": {
     "request": "browser-request",
     "secp256k1": "secp256k1/js"
@@ -50,15 +47,14 @@
     "ws": "^1.0.1"
   },
   "deprecated": false,
-  "description": "Obyte Core",
+  "description": "LCP Library",
   "devDependencies": {
     "ava": "^0.22.0",
     "testcheck": "^1.0.0-rc.2"
   },
   "homepage": "https://github.com/byteball/ocore",
   "keywords": [
-    "obyte",
-    "byteball",
+    "LCP",
     "DAG",
     "DLT",
     "cryptocurrency",
@@ -67,14 +63,18 @@
     "multisignature"
   ],
   "license": "MIT",
-  "name": "ocore",
+  "name": "lcp_lib",
   "repository": {
-    "url": "git://github.com/byteball/ocore.git",
+    "url": "https://github.com/LovechainPTYLTD/lcp_lib.git",
     "type": "git"
   },
   "scripts": {
     "compileGrammar": "nearleyc ./formula/grammar.ne -o ./formula/grammar.js",
     "test": "yarn ava"
   },
-  "version": "0.2.95"
+  "version": "0.0.1",
+  "main": "conf.js",
+  "directories": {
+    "test": "test"
+  }
 }
