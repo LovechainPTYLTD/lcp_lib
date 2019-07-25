@@ -2041,7 +2041,7 @@ function sendStoredDeviceMessages(ws, device_address){
 
 function version2int(version){
 	var arr = version.split('.');
-	return arr[0]*1000000 + arr[1]*1000 + arr[2]*1;
+    return parseInt(arr[0])*1000000 + parseInt(arr[1])*1000 + parseInt(arr[2])*1;
 }
 
 
@@ -2083,7 +2083,7 @@ function handleJustsaying(ws, subject, body){
 				sendJustsaying(ws, "old core");
 				return ws.close(1000, "old core");
 			}
-			if (version2int(ws.library_version) < version2int(constants.minCoreVersionForFullNodes)){
+			if (version2int(ws.library_version) < version2int(constants.minCoreVersion)){
 				ws.old_core = true;
 				if (ws.bSubscribed){
 					ws.bSubscribed = false;
@@ -2431,7 +2431,7 @@ function handleRequest(ws, tag, command, params){
 				sendErrorResponse(ws, tag, "invalid library_version: " + params.library_version);
 				return ws.close(1000, "invalid library_version");
 			}
-			if (version2int(params.library_version) < version2int(constants.minCoreVersionForFullNodes))
+			if (version2int(params.library_version) < version2int(constants.minCoreVersion))
 				ws.old_core = true;
 			if (ws.old_core){ // can be also set in 'version'
 				sendJustsaying(ws, 'upgrade_required');

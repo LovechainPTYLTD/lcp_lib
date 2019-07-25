@@ -6,10 +6,10 @@ exports.MAX_WITNESS_LIST_MUTATIONS = 1;
 exports.TOTAL_WHITEBYTES = 391333300000000;
 exports.MAJORITY_OF_WITNESSES = (exports.COUNT_WITNESSES%2===0) ? (exports.COUNT_WITNESSES/2+1) : Math.floor(exports.COUNT_WITNESSES/2);
 exports.COUNT_MC_BALLS_FOR_PAID_WITNESSING = 100;
-
+exports.versionWithoutTimestamp = '1.0';
 exports.version = '1.0';
 exports.alt = '1';
-
+exports.supported_versions = ['1.0', '2.0'];
 exports.bTestnet = (exports.alt === '2' && exports.version === '1.0t');
 
 exports.GENESIS_UNIT = 'FxtHGkOHjv7aXajkg00/22Xp7VVXZEvT5cXfe8BSZEQ=';
@@ -45,7 +45,8 @@ exports.TEXTCOIN_ASSET_CLAIM_MESSAGE_FEE = 209;
 exports.TEXTCOIN_ASSET_CLAIM_BASE_MSG_FEE = 158;
 exports.TEXTCOIN_PRIVATE_ASSET_CLAIM_MESSAGE_FEE = 99;
 
-exports.minCoreVersion = exports.bTestnet ? '0.0.1' : '0.0.1';
+exports.minCoreVersion = "0.0.1";
+//exports.minCoreVersionForFullNodes = exports.bTestnet ? '0.0.1' : '0.0.1';
 
 /*
 exports.witnessedLevelMustNotRetreatUpgradeMci = exports.bTestnet ? 684000 : 1400000;
