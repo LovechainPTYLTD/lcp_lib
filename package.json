@@ -17,7 +17,7 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "git+https://github.com/byteball/ocore.git#5054588dc3b55826b033a79ae0b92c2f9f77c60b",
+  "_resolved": "git+git+https://github.com/LovechainPTYLTD/lcp_lib.git",
   "_spec": "lcp_lib@git+https://github.com/LovechainPTYLTD/lcp_lib.git",
   "_where": "/home/ubuntu/investorNode",
   "author": "LCP",
