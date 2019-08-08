@@ -451,7 +451,8 @@ function addOutboundPeers(multiplier){
 		return;
 	var order_by = (multiplier <= 4) ? "count_new_good_joints DESC" : db.getRandom(); // don't stick to old peers with most accumulated good joints
 	var arrOutboundPeerUrls = arrOutboundPeers.map(function(ws){ return ws.peer; });
-	var arrInboundHosts = wss.clients.map(function(ws){ return ws.host; });
+	var clients = Array.from(wss.clients);
+	var arrInboundHosts = clients.map(function(ws){ return ws.host; });
 	var max_new_outbound_peers = Math.min(conf.MAX_OUTBOUND_CONNECTIONS-arrOutboundPeerUrls.length, 5); // having too many connections being opened creates odd delays in db functions
 	if (max_new_outbound_peers <= 0)
 		return;
