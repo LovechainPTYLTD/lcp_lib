@@ -64,4 +64,4 @@ To lower disk load and increase sync speed, you can optionally disable flushing 
 LCP network works over WebSocket protocol `ws://`
 
 
-
+For example `--max-old-space-size=4096`, if your server has at least 4GB available.
