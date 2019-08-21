@@ -1,6 +1,5 @@
 {
   "_from": "git+https://github.com/LovechainPTYLTD/lcp_lib.git",
-  "_id": "lcp_lib@0.0.1",
   "_inBundle": false,
   "_integrity": "",
   "_location": "/lcp_lib",
@@ -9,7 +8,7 @@
     "type": "git",
     "raw": "lcp_lib@git+https://github.com/LovechainPTYLTD/lcp_lib.git",
     "name": "lcp_lib",
-    "escapedName": "lcp_lib",
+    "escapedName": "lcplib",
     "rawSpec": "git+https://github.com/LovechainPTYLTD/lcp_lib.git",
     "saveSpec": "git+https://github.com/LovechainPTYLTD/lcp_lib.git",
     "fetchSpec": "https://github.com/LovechainPTYLTD/lcp_lib.git",
@@ -18,12 +17,10 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "git+https://github.com/LovechainPTYLTD/lcp_lib.git#df852334204b29d10b011739bcc239edbea590f1",
+  "_resolved": "git+git+https://github.com/LovechainPTYLTD/lcp_lib.git",
   "_spec": "lcp_lib@git+https://github.com/LovechainPTYLTD/lcp_lib.git",
-  "_where": "/home/ubuntu/lcp_cli_wallet",
-  "author": {
-    "name": "LCP"
-  },
+  "_where": "/home/ubuntu/investorNode",
+  "author": "LCP",
   "browser": {
     "request": "browser-request",
     "secp256k1": "secp256k1/js"
@@ -47,16 +44,13 @@
     "socks": "1.1.10",
     "sqlite3": "^4.0.0",
     "thirty-two": "^1.0.1",
-    "ws": "^1.0.1"
+    "ws": "^3.3.1"
   },
   "deprecated": false,
   "description": "LCP Library",
   "devDependencies": {
     "ava": "^0.22.0",
     "testcheck": "^1.0.0-rc.2"
-  },
-  "directories": {
-    "test": "test"
   },
   "homepage": "https://github.com/byteball/ocore",
   "keywords": [
@@ -69,15 +63,18 @@
     "multisignature"
   ],
   "license": "MIT",
-  "main": "conf.js",
   "name": "lcp_lib",
   "repository": {
-    "url": "git+https://github.com/LovechainPTYLTD/lcp_lib.git",
+    "url": "https://github.com/LovechainPTYLTD/lcp_lib.git",
     "type": "git"
   },
   "scripts": {
     "compileGrammar": "nearleyc ./formula/grammar.ne -o ./formula/grammar.js",
     "test": "yarn ava"
   },
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "main": "conf.js",
+  "directories": {
+    "test": "test"
+  }
 }
