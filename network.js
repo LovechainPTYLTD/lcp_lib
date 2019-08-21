@@ -313,8 +313,7 @@ function getRandomInt(min, max) {
 }
 
 function findRandomInboundPeer(handleInboundPeer){
-	var clients = Array.from(wss.clients);
-	var arrInboundSources = clients.filter(function(inbound_ws){ return inbound_ws.bSource; });
+	var arrInboundSources = wss.clients.filter(function(inbound_ws){ return inbound_ws.bSource; });
 	if (arrInboundSources.length === 0)
 		return handleInboundPeer(null);
 	var arrInboundHosts = arrInboundSources.map(function(ws){ return ws.host; });
@@ -452,8 +451,7 @@ function addOutboundPeers(multiplier){
 		return;
 	var order_by = (multiplier <= 4) ? "count_new_good_joints DESC" : db.getRandom(); // don't stick to old peers with most accumulated good joints
 	var arrOutboundPeerUrls = arrOutboundPeers.map(function(ws){ return ws.peer; });
-	var clients = Array.from(wss.clients);
-	var arrInboundHosts = clients.map(function(ws){ return ws.host; });
+	var arrInboundHosts = wss.clients.map(function(ws){ return ws.host; });
 	var max_new_outbound_peers = Math.min(conf.MAX_OUTBOUND_CONNECTIONS-arrOutboundPeerUrls.length, 5); // having too many connections being opened creates odd delays in db functions
 	if (max_new_outbound_peers <= 0)
 		return;
@@ -519,14 +517,14 @@ function getPeerWebSocket(peer){
 	for (var i=0; i<arrOutboundPeers.length; i++)
 		if (arrOutboundPeers[i].peer === peer)
 			return arrOutboundPeers[i];
-	for (var i=0; i<wss.clients.size; i++)
+	for (var i=0; i<wss.clients.length; i++)
 		if (wss.clients[i].peer === peer)
 			return wss.clients[i];
 	return null;
 }
 
 function getInboundDeviceWebSocket(device_address){
-	for (var i=0; i<wss.clients.size; i++){
+	for (var i=0; i<wss.clients.length; i++){
 		if (wss.clients[i].device_address === device_address)
 			return wss.clients[i];
 	}
@@ -643,8 +641,7 @@ function heartbeat(){
 	// just resumed after sleeping
 	var bJustResumed = (typeof window !== 'undefined' && window && window.cordova && Date.now() - last_hearbeat_wake_ts > 2*HEARTBEAT_TIMEOUT);
 	last_hearbeat_wake_ts = Date.now();
-	var clients = Array.from(wss.clients);
-	clients.concat(arrOutboundPeers).forEach(function(ws){
+	wss.clients.concat(arrOutboundPeers).forEach(function(ws){
 		if (ws.bSleeping || ws.readyState !== ws.OPEN)
 			return;
 		var elapsed_since_last_received = Date.now() - ws.last_ts;
@@ -685,9 +682,8 @@ function requestFromLightVendor(command, params, responseHandler){
 
 
 function getConnectionStatus(){
-
 	return {
-		incoming: wss.clients.size,
+		incoming: wss.clients.length,
 		outgoing: arrOutboundPeers.length,
 		outgoing_being_opened: Object.keys(assocConnectingOutboundWebsockets).length
 	}
@@ -868,8 +864,7 @@ function handleResponseToJointRequest(ws, request, response){
 }
 
 function havePendingRequest(command){
-	var clients = Array.from(wss.clients);
-	var arrPeers = clients.concat(arrOutboundPeers);
+	var arrPeers = wss.clients.concat(arrOutboundPeers);
 	for (var i=0; i<arrPeers.length; i++){
 		var assocPendingRequests = arrPeers[i].assocPendingRequests;
 		for (var tag in assocPendingRequests)
@@ -880,8 +875,7 @@ function havePendingRequest(command){
 }
 
 function havePendingJointRequest(unit){
-	var clients = Array.from(wss.clients);
-	var arrPeers = clients.concat(arrOutboundPeers);
+	var arrPeers = wss.clients.concat(arrOutboundPeers);
 	for (var i=0; i<arrPeers.length; i++){
 		var assocPendingRequests = arrPeers[i].assocPendingRequests;
 		for (var tag in assocPendingRequests){
@@ -895,7 +889,7 @@ function havePendingJointRequest(unit){
 
 // We may receive a reference to a nonexisting unit in parents. We are not going to keep the referencing joint forever.
 function purgeJunkUnhandledJoints(){
-	if (bCatchingUp || Date.now() - coming_online_time < 3600*1000 || wss.clients.size === 0 && arrOutboundPeers.length === 0)
+	if (bCatchingUp || Date.now() - coming_online_time < 3600*1000 || wss.clients.length === 0 && arrOutboundPeers.length === 0)
 		return;
 	joint_storage.purgeOldUnhandledJoints();
 }
@@ -933,8 +927,7 @@ function purgeDependenciesAndNotifyPeers(unit, error, onDone){
 }
 
 function forwardJoint(ws, objJoint){
-	var clients = Array.from(wss.clients);
-	clients.concat(arrOutboundPeers).forEach(function(client) {
+	wss.clients.concat(arrOutboundPeers).forEach(function(client) {
 		if (client != ws && client.bSubscribed)
 			sendJoint(client, objJoint);
 	});
@@ -1505,8 +1498,7 @@ function waitTillIdle(onIdle){
 
 function broadcastJoint(objJoint){
 	if (!conf.bLight) // the joint was already posted to light vendor before saving
-		var clients = Array.from(wss.clients);
-		clients.concat(arrOutboundPeers).forEach(function(client) {
+		wss.clients.concat(arrOutboundPeers).forEach(function(client) {
 			if (client.bSubscribed)
 				sendJoint(client, objJoint);
 		});
@@ -2405,7 +2397,6 @@ function handleRequest(ws, tag, command, params){
 	if (ws.assocInPreparingResponse[tag]) // ignore repeated request while still preparing response to a previous identical request
 		return console.log("ignoring identical "+command+" request");
 	ws.assocInPreparingResponse[tag] = true;
-	var clients = Array.from(wss.clients);
 	switch (command){
 		case 'heartbeat':
 			ws.bSleeping = false; // the peer is sending heartbeats, therefore he is awake
@@ -2425,7 +2416,7 @@ function handleRequest(ws, tag, command, params){
 			var subscription_id = params.subscription_id;
 			if (typeof subscription_id !== 'string')
 				return sendErrorResponse(ws, tag, 'no subscription_id');
-			if (clients.concat(arrOutboundPeers).some(function(other_ws) { return (other_ws.subscription_id === subscription_id); })){
+			if (wss.clients.concat(arrOutboundPeers).some(function(other_ws) { return (other_ws.subscription_id === subscription_id); })){
 				if (ws.bOutbound)
 					db.query("UPDATE peers SET is_self=1 WHERE peer=?", [ws.peer]);
 				sendErrorResponse(ws, tag, "self-connect");
@@ -2574,8 +2565,7 @@ function handleRequest(ws, tag, command, params){
 					[message_hash, message_string, objDeviceMessage.to],
 					function(){
 						// if the addressee is connected, deliver immediately
-						var clients = Array.from(wss.clients);
-						clients.concat(arrOutboundPeers).forEach(function(client){
+						wss.clients.concat(arrOutboundPeers).forEach(function(client){
 							if (client.device_address === objDeviceMessage.to && (!client.max_message_length || message_string.length <= client.max_message_length)) {
 								sendJustsaying(client, 'hub/message', {
 									message_hash: message_hash,
@@ -3064,7 +3054,7 @@ function startAcceptingConnections(){
 		ws.bInbound = true;
 		ws.last_ts = Date.now();
 		console.log('got connection from '+ws.peer+", host "+ws.host);
-		if (wss.clients.size >= conf.MAX_INBOUND_CONNECTIONS){
+		if (wss.clients.length >= conf.MAX_INBOUND_CONNECTIONS){
 			console.log("inbound connections maxed out, rejecting new client "+ip);
 			ws.close(1000, "inbound connections maxed out"); // 1001 doesn't work in cordova
 			return;
@@ -3174,7 +3164,7 @@ function closeAllWsConnections() {
 }
 
 function isConnected(){
-	return (arrOutboundPeers.length + wss.clients.size);
+	return (arrOutboundPeers.length + wss.clients.length);
 }
 
 function isCatchingUp(){
