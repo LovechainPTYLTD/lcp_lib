@@ -26,7 +26,7 @@
     "secp256k1": "secp256k1/js"
   },
   "bugs": {
-    "url": "https://github.com/byteball/ocore/issues"
+    "url": "https://github.com/LovechainPTYLTD/lcp_lib/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
@@ -35,7 +35,7 @@
     "bitcore-mnemonic": "~1.0.0",
     "dotenv": "5.0.1",
     "jszip": "^3.1.3",
-    "lodash": "^4.6.1",
+    "lodash": "^4.17.15",
     "moo": "^0.5.0",
     "mysql": "^2.10.2",
     "nearley": "^2.16.0",
@@ -52,7 +52,7 @@
     "ava": "^0.22.0",
     "testcheck": "^1.0.0-rc.2"
   },
-  "homepage": "https://github.com/byteball/ocore",
+  "homepage": "https://github.com/LovechainPTYLTD/lcp_lib",
   "keywords": [
     "LCP",
     "DAG",
